@@ -3,6 +3,10 @@ version: '3.7'
 services:
   nginx:
     image: nginx
+    networks:
+      flix-network:
+        aliases:
+          - "proxy-nginx"
     volumes:
       - ./sites-enabled:/etc/nginx/sites-enabled
       - /var/log/nginx:/var/log/nginx
