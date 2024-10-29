@@ -1,0 +1,1 @@
+GIT_SSH_COMMAND="ssh -i ~/.ssh/github-deploy-swarm" git pull
