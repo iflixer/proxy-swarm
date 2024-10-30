@@ -15,6 +15,7 @@ services:
         published: 80
         mode: host
     deploy:
+      mode: global
       placement:
         constraints:
           - node.labels.proxy == yes
