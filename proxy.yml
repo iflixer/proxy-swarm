@@ -43,6 +43,27 @@ services:
       restart_policy:
         condition: on-failure
 
+  india-edge:
+    image: adam21b/india-edge:latest
+    networks:
+      flix-network:
+        aliases:
+          - "india-edge"
+    volumes:
+      - log:/var/log/nginx
+      - cache:/opt/nginx
+    ports:
+      - target: 80
+        published: 80
+        mode: host
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.labels.india == yes
+      restart_policy:
+        condition: on-failure
+
 networks:
   flix-network:
       external: true
