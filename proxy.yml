@@ -64,6 +64,26 @@ services:
       restart_policy:
         condition: on-failure
 
+  sport-edge:
+    image: adam21b/sport-edge:latest
+    networks:
+      flix-network:
+        aliases:
+          - "sport-edge"
+    volumes:
+      - log:/var/log/nginx
+      - cache:/opt/nginx
+    ports:
+      - target: 80
+        published: 80
+        mode: host
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.labels.sport == yes
+      restart_policy:
+        condition: on-failure
 networks:
   flix-network:
       external: true
