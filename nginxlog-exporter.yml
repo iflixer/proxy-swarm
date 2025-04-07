@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  
+  cis:
+    image: ghcr.io/martin-helmich/prometheus-nginxlog-exporter:latest
+    volumes:
+      - /var/lib/docker/volumes/proxy_log/_data:/var/log/nginx:ro
+    command:
+      - "--config-file=/etc/nginxlog-exporter/config.hcl"
+    ports:
+      - "54100:4040"
+    volumes:
+      - ./nginxlog-exporter/nginxlog-exporter.hcl:/etc/nginxlog-exporter/config.hcl
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.labels.cis == yes
+      restart_policy:
+        condition: on-failure
+networks:
+  flix-network:
+      external: true
+
+volumes:
+  log:
+  cache:
