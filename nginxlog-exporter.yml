@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   cis:
-    image: ghcr.io/martin-helmich/prometheus-nginxlog-exporter:latest
+    image: quay.io/martinhelmich/prometheus-nginxlog-exporter:v1
     networks:
       flix-network:
         aliases:
