@@ -8,7 +8,7 @@ services:
         aliases:
           - "cis-nginxlog-exporter"
     volumes:
-      - /var/lib/docker/volumes/proxy_log/_data:/var/log/nginx:ro
+      - log:/var/log/nginx:ro
     command:
       - "--config-file=/etc/nginxlog-exporter/config.hcl"
     ports:
@@ -25,3 +25,6 @@ services:
 networks:
   flix-network:
       external: true
+volumes:
+  log:
+    external: true
