@@ -1,9 +1,12 @@
 version: '3.7'
 
 services:
-  
   cis:
     image: ghcr.io/martin-helmich/prometheus-nginxlog-exporter:latest
+    networks:
+      flix-network:
+        aliases:
+          - "cis-nginxlog-exporter"
     volumes:
       - /var/lib/docker/volumes/proxy_log/_data:/var/log/nginx:ro
     command:
@@ -22,7 +25,3 @@ services:
 networks:
   flix-network:
       external: true
-
-volumes:
-  log:
-  cache:
