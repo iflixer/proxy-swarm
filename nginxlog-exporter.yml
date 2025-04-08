@@ -10,11 +10,11 @@ services:
     volumes:
       - log:/var/log/nginx:ro
     command:
-      - "--config-file=/etc/nginxlog-exporter/config.hcl"
+      - "--config-file=/etc/nginxlog-exporter/config.yaml"
     ports:
       - "54100:4040"
     volumes:
-      - ./nginxlog-exporter/nginxlog-exporter.hcl:/etc/nginxlog-exporter/config.hcl
+      - ./nginxlog-exporter/nginxlog-exporter.yaml:/etc/nginxlog-exporter/config.yaml
     deploy:
       mode: global
       placement:
