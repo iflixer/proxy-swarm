@@ -2,8 +2,9 @@ listen {
   port = 4040
 }
 
-namespace = "nginx_access"
-format = ""
+namespace = "nginx_cis"
+
+format = "[$time_local] US:$upstream_status UCS:$upstream_cache_status S:$status URT:$upstream_response_time UA:$upstream_addr M:$request_method \"https://$host$request_uri\""
 
 source = {
   files = ["/var/log/nginx/cis-dle-root.log"]
