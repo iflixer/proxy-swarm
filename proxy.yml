@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  nginx:
+  brazil-edge:
     image: adam21b/brazil-edge:latest
     networks:
       flix-network:
