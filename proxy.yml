@@ -2,11 +2,11 @@ version: '3.7'
 
 services:
   nginx:
-    image: adam21b/proxy:latest
+    image: adam21b/brazil-edge:latest
     networks:
       flix-network:
         aliases:
-          - "proxy-nginx"
+          - "brazil-edge"
     volumes:
       - log:/var/log/nginx
       - cache:/opt/nginx
@@ -18,7 +18,7 @@ services:
       mode: global
       placement:
         constraints:
-          - node.labels.proxy == yes
+          - node.labels.brazil == yes
       restart_policy:
         condition: on-failure
 
