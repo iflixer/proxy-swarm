@@ -16,6 +16,9 @@ services:
       - WEBDIS_PORT=17379
       - TEST_ENV=qwe
       - SIGN_KEY=BKkdZwqW2F87
+    volumes:
+      - log:/var/log/nginx
+      - cache:/var/cache/nginx
     deploy:
       mode: global
       placement:
@@ -70,3 +73,7 @@ services:
 networks:
   flix-network:
     external: true
+
+volumes:
+  log:
+  cache:
