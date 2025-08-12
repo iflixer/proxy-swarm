@@ -1,0 +1,72 @@
+
+services:
+
+  vproxy:
+    image: adam21b/cis-vproxy:latest
+    networks:
+      - flix-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - target: 80
+        published: 80
+        mode: host
+    environment:
+      - WEBDIS_HOST=host.docker.internal
+      - WEBDIS_PORT=17379
+      - TEST_ENV=qwe
+      - SIGN_KEY=BKkdZwqW2F87
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.labels.cis-vproxy == yes
+      update_config:
+        parallelism: 1
+        failure_action: rollback
+        delay: 2s
+  redis:
+    image: redis:5.0.3
+    command:
+      - "redis-server"
+      - "--save 20 1"
+     # - "--cluster-enabled yes"
+    #  - "--cluster-config-file nodes.conf"
+    #  - "--cluster-node-timeout 5000"
+      - "--appendonly yes"
+      - "--maxmemory-policy allkeys-lru"
+      - "--maxmemory 256mb"
+    networks:
+      flix-network:
+        aliases:
+          - "cis-vproxy-redis"
+    deploy:
+      placement:
+        constraints:
+          - node.labels.cis-vproxy == yes
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  webdis:
+    image: adam21b/cis-vproxy-webdis:latest
+    networks:
+      - flix-network
+    ports:
+      - target: 7379
+        published: 17379
+        mode: host
+    environment:
+      - REDIS_HOST=cis-vproxy-redis
+      - REDIS_PORT=6379
+    deploy:
+      placement:
+        constraints:
+          - node.labels.cis-vproxy == yes
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  flix-network:
+    external: true
